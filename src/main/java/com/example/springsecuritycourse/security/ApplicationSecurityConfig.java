@@ -18,16 +18,10 @@ public class ApplicationSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
         return http.build();
-        /*http
-                .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults());
-        return http.build();*/
     }
 }
