@@ -41,7 +41,7 @@ public class ApplicationSecurityConfig {
                 .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin();
 
         return http.build();
     }
