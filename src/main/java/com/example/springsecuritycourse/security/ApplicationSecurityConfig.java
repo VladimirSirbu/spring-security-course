@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static com.example.springsecuritycourse.security.ApplicationUserPermission.COURSE_WRITE;
 import static com.example.springsecuritycourse.security.ApplicationUserRole.*;
@@ -32,17 +33,16 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // by default S. Security protect API (when you want to POST, PUT, DELTE). And disabling CSRF() you cancel this protection
+//                .csrf().disable() // by default Sp. Security protect API (when you want to POST, PUT, DELTE). And disabling CSRF() you cancel this protection
+                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
-//                .antMatchers(HttpMethod.DELETE, "management/api/v1/students").hasAuthority(COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.POST, "management/api/v1/students").hasAuthority(COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.PUT, "management/api/v1/students").hasAuthority(COURSE_WRITE.getPermission())
-//                .antMatchers(HttpMethod.GET, "management/api/v1/students").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
+
         return http.build();
     }
 
