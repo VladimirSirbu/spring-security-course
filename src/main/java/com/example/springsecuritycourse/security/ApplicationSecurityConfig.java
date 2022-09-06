@@ -33,9 +33,9 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .csrf().disable() // by default Sp. Security protect API (when you want to POST, PUT, DELTE). And disabling CSRF() you cancel this protection
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+                .csrf().disable() // by default Sp. Security protect API (when you want to POST, PUT, DELTE). And disabling CSRF() you cancel this protection
+//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // use this when submit/login from any clinet instead postman
+//                .and()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
