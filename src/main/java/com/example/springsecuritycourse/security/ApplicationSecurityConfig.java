@@ -43,7 +43,9 @@ public class ApplicationSecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/courses", true);
+                .defaultSuccessUrl("/courses", true)
+                .and()
+                .rememberMe(); // by default 2 weeks
 
         return http.build();
     }
